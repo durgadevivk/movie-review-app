@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import StarRating from "./StarRating";
+
 
 type MovieCardProps={
    movie:{ 
