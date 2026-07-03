@@ -1,21 +1,22 @@
+
+
 type SearchBarProps = {
   search: string;
-  setSearch: React.Dispatch<React.SetStateAction<string>>;
+  setSearch: (value: string) => void;
   onSearch: () => void;
 };
-const Searchbar=({search,setSearch,onSearch}:SearchBarProps)=>{
+const SearchBar=({search,setSearch,onSearch}:SearchBarProps)=>{
     return(
-        <>
-        <div className="flex flex-col sm:flex-row gap-4 mb-8">
+        <div className="flex flex-col sm:flex-row gap-4 ">
             <input type="text" placeholder="Search Movies" value={search}
             onChange={(e)=>setSearch(e.target.value)} 
-            className="flex-1 border border-gray-300 rounded-lg px-4 py-2 outline-none focus:ring-2 focus:ring-blue-500"
+            className="border border-2 rounded-md ml-10"
             />
         <button onClick={onSearch}
-        className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700">Search</button>
+        className=" text-white px-6 py-2 rounded-lg hover:bg-blue-700">Search</button>
 
         </div>
-        </>
+    
     )
 }
-export default Searchbar
+export default SearchBar

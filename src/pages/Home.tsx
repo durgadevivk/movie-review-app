@@ -1,11 +1,19 @@
 import { useEffect, useState } from "react"
-import { searchMovies } from "../api"
+import { getMovieDetails, searchMovies } from "../api"
 import MovieCard from "../components/MovieCard"
-import Searchbar from "../components/SearchBar"
-import Filterbar from "../components/Filterbar"
+import NavBar from "../components/NavBar"
+
+type Movie = {
+  imdbID: string;
+  Title: string;
+  Year: string;
+  Poster: string;
+  Type: string;
+  imdbRating?: string;
+};
 
 const Home=()=>{
-    const [movies,setMovies]=useState<any[]>([])
+    const [movies,setMovies]=useState<Movie[]>([])
     const years = [...new Set(movies.map((movie) => movie.Year))];
     const [search,setSearch]=useState("batman")
     const [selectedYear, setSelectedYear] = useState("");
@@ -14,10 +22,19 @@ const Home=()=>{
                 ? movies.filter((movie) => movie.Year === selectedYear)
   : movies;
     
-const loadMovies=async ()=>{
+const fetchMovies=async ()=>{
     const data=await searchMovies(search);
     if(data.Response==="True"){
-    setMovies(data.Search)
+      const movieWithimdbRating=await Promise.all(
+        data.Search.map(async (movie:any)=>{
+          const details=await getMovieDetails(movie.imdbID)
+          return{
+            ...movie,
+            imdbRating:details.imdbRating,
+          }
+        })
+      )
+    setMovies(movieWithimdbRating)
     }else{
         setMovies([])
     }
@@ -25,24 +42,19 @@ const loadMovies=async ()=>{
     
 }
     useEffect(()=>{
-        loadMovies()
+        fetchMovies()
     },[])
 
     return(
         <>
-     <div className="max-w-7xl mx-auto p-6">
+     <div>
 
-      <h1 className="text-4xl font-bold text-center mb-8">
-        Movie Review App
-      </h1>
-      <Searchbar
-        search={search}
-        setSearch={setSearch}
-        onSearch={loadMovies}
-      />
-      <Filterbar
-    selectedYear={selectedYear}
-    setSelectedYear={setSelectedYear}
+    <NavBar
+  search={search}
+  setSearch={setSearch}
+  onSearch={fetchMovies}
+  selectedYear={selectedYear}
+  setSelectedYear={setSelectedYear}
   years={years}
 />
       

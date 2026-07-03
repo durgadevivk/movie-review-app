@@ -1,15 +1,15 @@
 type FilterBarProps = {
   selectedYear: string;
-  setSelectedYear: React.Dispatch<React.SetStateAction<string>>;
+  setSelectedYear: (value: string) => void;
   years: string[];
 };
-const Filterbar=({selectedYear,setSelectedYear,years}:FilterBarProps)=>{
+const FilterBar=({selectedYear,setSelectedYear,years}:FilterBarProps)=>{
     return(
         
-        <div className="mb-6">
+        <div className="">
             <label className="mr-3 font-semibold">Filter By Year</label>
             <select value={selectedYear} onChange={(e)=>setSelectedYear(e.target.value)} 
-            className="border border-gray-300 rounded-lg px-4 py-2">
+            className="border border-gray-300 bg-orange-600 text-color-black rounded-lg px-4 py-2">
                 <option value="">All Years</option>
             {
                 years.map((year)=>(
@@ -21,4 +21,4 @@ const Filterbar=({selectedYear,setSelectedYear,years}:FilterBarProps)=>{
         
     )
 }
-export default Filterbar
+export default FilterBar

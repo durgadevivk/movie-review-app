@@ -6,10 +6,10 @@ const BASE_URL = "https://www.omdbapi.com/";
 export const searchMovies=async (movie:string)=>{
     const response=await axios.get(BASE_URL,{
              params: {
-             apikey: API_KEY,
-                s: movie,
-    },
-    })
+              apikey: API_KEY,
+               s: movie,
+   },
+   })
     return response.data;
 }
 export const getMovieDetails=async (imdbID:string)=>{

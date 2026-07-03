@@ -3,16 +3,16 @@ import { useParams } from "react-router-dom"
 import { getMovieDetails } from "../api";
 import StarRating from "../components/StarRating";
 type Movie = {
-  Title: string;
-  Poster: string;
-  Year: string;
-  Released: string;
-  Runtime: string;
-  Genre: string;
-  Director: string;
-  Actors: string;
-  Plot: string;
-  imdbRating: string;
+  Title: string,
+  Poster: string,
+  Year: string,
+  Released: string,
+  Runtime: string,
+  Genre: string,
+  Director: string,
+  Actors: string,
+  Plot: string,
+  imdbRating: string
 };
 const MovieDetails=()=>{
      const {imdbID}=useParams()
@@ -21,13 +21,13 @@ const MovieDetails=()=>{
     console.log(imdbID);
 
     useEffect(()=>{
-        const loadMovie=async ()=>{
-            if(!imdbID) return;
+        const fetchMovie=async ()=>{
+           if(!imdbID) return;
             const data=await getMovieDetails(imdbID);
             console.log(data);
             setMovie(data);
         };
-        loadMovie();
+        fetchMovie();
     },[imdbID])
      if (!movie) {
     return (
@@ -37,8 +37,8 @@ const MovieDetails=()=>{
     );
   }
     return(
-    <div className="max-w-5xl mx-auto p-8">
-        <div className="grid md:grid-cols-2 gap-8">
+    <div className="max-w-5xl mx-auto p-8 mb-5">
+        <div className="grid md:grid-cols-2 gap-4">
          <img
           src={movie.Poster}
           alt={movie.Title}
@@ -57,7 +57,6 @@ const MovieDetails=()=>{
             <h2 className="text-xl font-semibold">
               Plot
             </h2>
-
             <p>{movie.Plot}</p>
             <StarRating imdbID={imdbID!}/>
 
