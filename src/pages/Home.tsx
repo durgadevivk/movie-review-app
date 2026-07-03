@@ -47,7 +47,7 @@ const fetchMovies=async ()=>{
 
     return(
         <>
-     <div>
+     <div className="p-4 m-2">
 
     <NavBar
   search={search}
